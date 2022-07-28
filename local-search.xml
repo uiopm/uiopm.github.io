@@ -4,13 +4,81 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2022/07/28/hello-world/"/>
-    <url>/2022/07/28/hello-world/</url>
+    <title>RPC</title>
+    <link href="/2022/07/28/20220728/"/>
+    <url>/2022/07/28/20220728/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h1><ul><li>Remote Procedure Call 远程过程调用，服务消费者可以像调用本地方法一样调用服务</li><li>注册中心<ul><li>在dubbo中，由于本地缓存，注册中心宕机也不影响消费者调用服务</li><li>在dubbo中，注册中心会将变更推送给消费服务者</li></ul></li><li>约定协议</li><li>序列化格式<ul><li>序列化：将数据结构或对象转化为二进制串传输</li><li>反序列化：将二进制串转化为数据结构和对象用于数据处理</li></ul></li><li>容错机制</li><li>负载均衡策略</li><li>监控运维<ul><li>dubbo，定时发送调用次数和时间等相关统计数据到监控中心</li></ul></li><li>服务消费者</li><li>服务提供者</li></ul><p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/image-20220728213856944.png" alt="dubbo架构"></p>]]></content>
     
     
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+      <tag>rpc</tag>
+      
+      <tag>dubbo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>FRAUDAR算法</title>
+    <link href="/2022/07/28/fraudar/"/>
+    <url>/2022/07/28/fraudar/</url>
+    
+    <content type="html"><![CDATA[<h2 id="FRAUDAR算法"><a href="#FRAUDAR算法" class="headerlink" title="FRAUDAR算法"></a>FRAUDAR算法</h2><ul><li><p>基于二部图表示</p><ul><li>二部图：网络中存在两种类型的节点Users和Objects，文中假设可能存在一个或多个Users收到相关某个实体的控制，进而与Objects的某个子集交互而产生连边。</li></ul></li><li><p>目标：找到一个S，使得S构成子图的嫌疑指标g(S)最大</p></li><li><p><strong>步骤</strong></p><ol><li>将优先级最高的节点移出二部图  </li><li>更新与移出节点相关的节点可疑度 </li><li>反复执行步骤1和步骤2，直至所有节点都被移出 </li><li>最后比较各轮迭代中节点的可疑度数，找到最大可疑度对应的子图</li></ol></li><li><p>特点</p><ul><li>识别伪装</li><li>识别效率上限高</li><li>实际数据表现好</li></ul></li><li></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Java8特性</title>
+    <link href="/2022/07/27/20220727/"/>
+    <url>/2022/07/27/20220727/</url>
+    
+    <content type="html"><![CDATA[<h1 id="20220727"><a href="#20220727" class="headerlink" title="20220727"></a>20220727</h1><ul><li><p>Lambda表达式</p> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">PriorityQueue&lt;ListNode&gt; pq = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PriorityQueue</span>&lt;&gt;(<br>lists.lenth, (a, b) -&gt; (a.val - b.val));<br></code></pre></td></tr></table></figure></li><li><p>stream()</p> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//map</span><br>String[] rightsIds= malltRightsTagList.stream()<br>        .map(MalltRightsTag::getRightsId).toArray(String[]::<span class="hljs-keyword">new</span>);<br></code></pre></td></tr></table></figure> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//filter</span><br>stringList.stream()<br>          .filter((s) -&gt; s.startsWith(<span class="hljs-string">&quot;a&quot;</span>))<br>          .forEach(System.out::println);<span class="hljs-comment">//aaa2 aaa1</span><br></code></pre></td></tr></table></figure></li><li><p><T> T[] list.toArray(T[] a); </p> <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-type">String</span>[] strs = list.<span class="hljs-built_in">toArray</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">String</span>[<span class="hljs-number">0</span>]);<br></code></pre></td></tr></table></figure></li><li><p>sql注入是啥</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+      <tag>lambda</tag>
+      
+    </tags>
     
   </entry>
   
