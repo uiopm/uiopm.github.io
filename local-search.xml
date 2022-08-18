@@ -146,31 +146,6 @@
   
   
   <entry>
-    <title>FRAUDAR算法</title>
-    <link href="/2022/07/28/fraudar/"/>
-    <url>/2022/07/28/fraudar/</url>
-    
-    <content type="html"><![CDATA[<h2 id="FRAUDAR算法"><a href="#FRAUDAR算法" class="headerlink" title="FRAUDAR算法"></a>FRAUDAR算法</h2><ul><li><p><strong>基于二部图表示</strong></p><ul><li>二部图：网络中存在两种类型的节点Users和Objects，文中假设可能存在一个或多个Users收到相关某个实体的控制，进而与Objects的某个子集交互而产生连边。找到一个S，使得S构成子图的嫌疑指标g(S)最大</li><li>两类结点组成的欺诈场景还可以举出很多例子，如电商场景下用户对商户的薅羊毛、刷好评，如社交场景下水军账号的虚假关注、转发，又如消金场景下用户与商户勾结对平台的消费贷套现欺诈。这些行为都会使两类结点之间出现异常的连接分布，从整体网络看来其呈现出了一张致密的双边连接子图，且该子图内的结点与图外结点联系相对较少，把这种大量的、同步的非正常关联行为模式称之为Lockstep，即在本不应出现聚集行为的二部图自然关系网络中，出现了双边聚集性行为。</li></ul></li><li><p><strong>表现</strong>：该论文主要针对社交虚假粉丝，虚假关注， 虚假评价和等场景， 同时针对伪装进行良好的算法设计，在Twitter公开数据集上能够挖掘出存在购买虚假粉丝账号的博主，该博主账号7年未被Twitter检测到。</p></li><li><p><strong>步骤</strong></p><ol><li>将优先级最高的节点移出二部图  </li><li>更新与移出节点相关的节点可疑度 </li><li>反复执行步骤1和步骤2，直至所有节点都被移出 </li><li>最后比较各轮迭代中节点的可疑度数，找到最大可疑度对应的子图</li></ol></li><li><p><strong>特点</strong></p><ul><li>识别伪装</li><li>理论保证</li><li>发现密集块</li><li>实际数据表现好</li><li>可扩展性，接近线性的时间复杂度</li><li>提出了一系列新颖的指标用于度量可疑程度</li></ul></li><li><p><strong>背景</strong></p><ul><li>global method：这类方法偏矩阵分解的方式，可以获得稠密的sub 矩阵块， 像Holoscope 也是用这种方式来做加速和初始化。</li><li>本地聚类方法：就是local search 的方式，就是在定义一个obj之后通过search的方式在整体的图中，组合的search找到一个局部最优解。</li><li>Dense Subgraph mining： 这种社区划分类似的方法，或者图切割的方式可以找到子图，但是对于欺诈的场景下，还是类似于Local Clustering Methods</li></ul></li></ul><p>​<em><strong>注：spectral algorithms可以指代使用了SVD特征值分解的算法</strong></em></p>]]></content>
-    
-    
-    <categories>
-      
-      <category>Diary</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>风险控制</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>RPC</title>
     <link href="/2022/07/28/20220728/"/>
     <url>/2022/07/28/20220728/</url>
@@ -192,6 +167,31 @@
       <tag>rpc</tag>
       
       <tag>dubbo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>FRAUDAR算法</title>
+    <link href="/2022/07/28/fraudar/"/>
+    <url>/2022/07/28/fraudar/</url>
+    
+    <content type="html"><![CDATA[<h2 id="FRAUDAR算法"><a href="#FRAUDAR算法" class="headerlink" title="FRAUDAR算法"></a>FRAUDAR算法</h2><ul><li><p><strong>基于二部图表示</strong></p><ul><li>二部图：网络中存在两种类型的节点Users和Objects，文中假设可能存在一个或多个Users收到相关某个实体的控制，进而与Objects的某个子集交互而产生连边。找到一个S，使得S构成子图的嫌疑指标g(S)最大</li><li>两类结点组成的欺诈场景还可以举出很多例子，如电商场景下用户对商户的薅羊毛、刷好评，如社交场景下水军账号的虚假关注、转发，又如消金场景下用户与商户勾结对平台的消费贷套现欺诈。这些行为都会使两类结点之间出现异常的连接分布，从整体网络看来其呈现出了一张致密的双边连接子图，且该子图内的结点与图外结点联系相对较少，把这种大量的、同步的非正常关联行为模式称之为Lockstep，即在本不应出现聚集行为的二部图自然关系网络中，出现了双边聚集性行为。</li></ul></li><li><p><strong>表现</strong>：该论文主要针对社交虚假粉丝，虚假关注， 虚假评价和等场景， 同时针对伪装进行良好的算法设计，在Twitter公开数据集上能够挖掘出存在购买虚假粉丝账号的博主，该博主账号7年未被Twitter检测到。</p></li><li><p><strong>步骤</strong></p><ol><li>将优先级最高的节点移出二部图  </li><li>更新与移出节点相关的节点可疑度 </li><li>反复执行步骤1和步骤2，直至所有节点都被移出 </li><li>最后比较各轮迭代中节点的可疑度数，找到最大可疑度对应的子图</li></ol></li><li><p><strong>特点</strong></p><ul><li>识别伪装</li><li>理论保证</li><li>发现密集块</li><li>实际数据表现好</li><li>可扩展性，接近线性的时间复杂度</li><li>提出了一系列新颖的指标用于度量可疑程度</li></ul></li><li><p><strong>背景</strong></p><ul><li>global method：这类方法偏矩阵分解的方式，可以获得稠密的sub 矩阵块， 像Holoscope 也是用这种方式来做加速和初始化。</li><li>本地聚类方法：就是local search 的方式，就是在定义一个obj之后通过search的方式在整体的图中，组合的search找到一个局部最优解。</li><li>Dense Subgraph mining： 这种社区划分类似的方法，或者图切割的方式可以找到子图，但是对于欺诈的场景下，还是类似于Local Clustering Methods</li></ul></li></ul><p>​<em><strong>注：spectral algorithms可以指代使用了SVD特征值分解的算法</strong></em></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
       
     </tags>
     
