@@ -4,6 +4,106 @@
   
   
   <entry>
+    <title>孤立森林</title>
+    <link href="/2022/09/03/%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97/"/>
+    <url>/2022/09/03/%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97/</url>
+    
+    <content type="html"><![CDATA[<h2 id="孤立森林（Isolation-Forest）（集成学习模型）"><a href="#孤立森林（Isolation-Forest）（集成学习模型）" class="headerlink" title="孤立森林（Isolation-Forest）（集成学习模型）"></a>孤立森林（Isolation-Forest）（集成学习模型）</h2><ul><li><p><strong>理论基础</strong>: </p><ol><li>异常数据占总样本量的比例很少</li><li>异常点的特征值与正常点的差异很大</li><li><strong>异常样本相较普通样本可以通过较少次数的随机特征分割被孤立出来</strong></li></ol></li><li><p><strong>步骤</strong>:</p><ol><li><p>从训练数据中随机选择 Ψ 个点作为子样本，放入一棵孤立树的根节点；</p></li><li><p>随机指定一个维度，在当前节点数据范围内，随机产生一个切割点 p —— 切割点产生于当前节点数据中指定维度的最大值与最小值之间；</p></li><li><p>此切割点的选取生成了一个超平面，将当前节点数据空间切分为2个子空间：把当前所选维度下小于 p 的点放在当前节点的左分支，把大于等于 p 的点放在当前节点的右分支；</p></li><li><p>在节点的左分支和右分支节点递归步骤 2、3，不断构造新的叶子节点，直到叶子节点上只有一个数据（无法再继续切割） 或树已经生长到了所设定的高度 。</p></li></ol></li><li><p><strong>优点</strong>：</p><ol><li><p>iForest具有<strong>线性时间复杂度</strong>。因为是ensemble的方法，所以可以用在含有海量数据的数据集上面。通常<strong>树的数量越多，算法越稳定</strong>。由于每棵树都是互相独立生成的，因此可以部署在<strong>大规模分布式系统上来加速运算</strong>。</p></li><li><p>iForest推动了重心估计（Mass Estimation）理论发展，目前在分类聚类和异常检测中都取得显著效果，发表于各大顶级数据挖掘会议和期刊（如SIGKDD，ICDM，ECML）。</p></li></ol></li><li><p><strong>缺点</strong>：</p><ol><li><strong>iForest不适用于特别高维的数据</strong>。由于每次切数据空间都是随机选取一个维度，建完树后仍然有大量的维度信息没有被使用，导致算法可靠性降低。<strong>高维空间还可能存在大量噪音维度或无关维度（irrelevant attributes），影响树的构建。</strong>对这类数据，建议使用子空间异常检测</li><li>iForest仅对全局稀疏点敏感，不擅长处理局部的相对稀疏点 （Local Anomaly）。</li></ol></li><li><p><strong>适用场景</strong>：</p><ol><li>孤立森林的特点是计算量小、天生可以分布式训练和计算，非常适合海量数据的场景（如果数据的维度特别高，孤立森林的规模会过于庞大，就没有了计算开销较小的优势）。</li><li>如果训练样本中<strong>异常样本的比例比较高</strong>，违背了先前提到的异常检测的基本假设，可能最终的效果会受影响；</li><li>异常检测跟具体的应用场景紧密相关，算法检测出的“异常”不一定是我们实际想要的。比如，在识别虚假交易时，异常的交易未必就是虚假的交易。所以，在特征选择时，可能需要<strong>过滤不太相关的特征</strong>，以免识别出一些不太相关的“异常”。</li></ol></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>pyod</title>
+    <link href="/2022/09/02/pyod/"/>
+    <url>/2022/09/02/pyod/</url>
+    
+    <content type="html"><![CDATA[<h2 id="PyOD"><a href="#PyOD" class="headerlink" title="PyOD"></a>PyOD</h2><h3 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h3><p>​异常检测（又称outlier detection、anomaly detection，离群值检测）是一种重要的数据挖掘方法，可以找到与“主要数据分布”不同的异常值（deviant from the general data distribution），比如从信用卡交易中找出诈骗案例，从正常的网络数据流中找出入侵，有非常广泛的商业应用价值。同时它可以被用于机器学习任务中的预处理（preprocessing），防止因为少量异常点存在而导致的训练或预测失败。</p><h3 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h3><p>● 包括近20种常见的异常检测算法，比如经典的LOF&#x2F;LOCI&#x2F;ABOD以及最新的深度学习如对抗生成模型（GAN）和集成异常检测（outlier ensemble）<br>● 支持不同版本的Python：包括2.7和3.5+；支持多种操作系统：windows，macOS和Linux<br>● 简单易用且一致的API，只需要几行代码就可以完成异常检测，方便评估大量算法<br>● 使用JIT和并行化（parallelization）进行优化，加速算法运行及扩展性（scalability），可以处理大量数据</p><h3 id="三、孤立森林模型效果"><a href="#三、孤立森林模型效果" class="headerlink" title="三、孤立森林模型效果"></a>三、孤立森林模型效果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-string">&quot;&quot;&quot;Example of using Isolation Forest for outlier detection</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># Author: Yue Zhao &lt;zhaoy@cmu.edu&gt;</span><br><span class="hljs-comment"># License: BSD 2 clause</span><br><br><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> division<br><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function<br><br><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-comment"># temporary solution for relative imports in case pyod is not installed</span><br><span class="hljs-comment"># if pyod is installed, no need to use the following line</span><br><span class="hljs-comment"># sys.path.append(</span><br><span class="hljs-comment">#     os.path.abspath(os.path.join(os.path.dirname(&quot;__file__&quot;), &#x27;..&#x27;)))</span><br><br><span class="hljs-keyword">from</span> pyod.models.iforest <span class="hljs-keyword">import</span> IForest<br><span class="hljs-keyword">from</span> pyod.utils.data <span class="hljs-keyword">import</span> generate_data<br><br><span class="hljs-keyword">from</span> pyod.utils.data <span class="hljs-keyword">import</span> evaluate_print<br><span class="hljs-keyword">from</span> pyod.utils.example <span class="hljs-keyword">import</span> visualize<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    contamination = <span class="hljs-number">0.1</span>  <span class="hljs-comment"># percentage of outliers</span><br>    n_train = <span class="hljs-number">200</span>  <span class="hljs-comment"># number of training points</span><br>    n_test = <span class="hljs-number">100</span>  <span class="hljs-comment"># number of testing points</span><br><br>    <span class="hljs-comment"># Generate sample data</span><br>    X_train, X_test, y_train, y_test = \<br>        generate_data(n_train=n_train,<br>                      n_test=n_test,<br>                      n_features=<span class="hljs-number">2</span>,<br>                      contamination=contamination,<br>                      random_state=<span class="hljs-number">42</span>)<br><br>    <span class="hljs-comment"># train IForest detector</span><br>    clf_name = <span class="hljs-string">&#x27;IForest&#x27;</span><br>    clf = IForest()<br>    clf.fit(X_train)<br><br>    <span class="hljs-comment"># get the prediction labels and outlier scores of the training data</span><br>    y_train_pred = clf.labels_  <span class="hljs-comment"># binary labels (0: inliers, 1: outliers)</span><br>    y_train_scores = clf.decision_scores_  <span class="hljs-comment"># raw outlier scores</span><br><br>    <span class="hljs-comment"># get the prediction on the test data</span><br>    y_test_pred = clf.predict(X_test)  <span class="hljs-comment"># outlier labels (0 or 1)</span><br>    y_test_scores = clf.decision_function(X_test)  <span class="hljs-comment"># outlier scores</span><br><br>    <span class="hljs-comment"># evaluate and print the results</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\nOn Training Data:&quot;</span>)<br>    evaluate_print(clf_name, y_train, y_train_scores)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\nOn Test Data:&quot;</span>)<br>    evaluate_print(clf_name, y_test, y_test_scores)<br><br>    <span class="hljs-comment"># example of the feature importance</span><br>    feature_importance = clf.feature_importances_<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Feature importance&quot;</span>, feature_importance)<br><br>    <span class="hljs-comment"># visualize the results</span><br>    visualize(clf_name, X_train, y_train, X_test, y_test, y_train_pred,<br>              y_test_pred, show_figure=<span class="hljs-literal">True</span>, save_figure=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure><p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/image-20220905143734162.png" alt="image-20220905143734162"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>CBLOF</title>
+    <link href="/2022/08/28/CBLOF/"/>
+    <url>/2022/08/28/CBLOF/</url>
+    
+    <content type="html"><![CDATA[<h1 id="CBLOF-基于聚类的本地异常因子"><a href="#CBLOF-基于聚类的本地异常因子" class="headerlink" title="CBLOF 基于聚类的本地异常因子"></a>CBLOF 基于聚类的本地异常因子</h1><h3 id="一、理论基础"><a href="#一、理论基础" class="headerlink" title="一、理论基础"></a>一、理论基础</h3><p>​数据可能会在多个不同的地方聚集，形成簇。当一个点越接近大簇的时候，他是正常点的概率就越高，反之越低。那么，我们只要在CBLOF里面，套一个聚类算法，就能得到这些簇了。一般，我们会用k-means算法，距离就直接用欧氏距离。于是，我们就有了上图当中的四个簇。这里，我们明显看出来，C2和C4是两个大簇，剩下的C1和C3是两个小簇。那么，距离C2或者C4的中心（即K-Means里面的中心，又叫Centroids）越近，就越正常，反之越异常</p><h3 id="二、步骤"><a href="#二、步骤" class="headerlink" title="二、步骤"></a>二、步骤</h3><ul><li><p>聚类</p></li><li><p>大簇、小簇定义</p><ul><li>绝对多数：从最大簇开始，一个一个的把他们的size加起来，他们的size要达到总size的绝对多数。而这个绝对多数，是一个可以设置的参数，他的取值范围是0.5到1，一般取0.9。</li><li>突降：突降是用倍数来衡量的。默认值是5，也就是突降了5倍。</li></ul></li><li><p>CBLOF因子：到最近大簇的距离</p></li></ul><h3 id="三、样例"><a href="#三、样例" class="headerlink" title="三、样例"></a>三、样例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-string">&quot;&quot;&quot;Example of using Cluster-based Local Outlier Factor (CBLOF) for outlier</span><br><span class="hljs-string">detection</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># Author: Yue Zhao &lt;zhaoy@cmu.edu&gt;</span><br><span class="hljs-comment"># License: BSD 2 clause</span><br><br><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> division<br><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function<br><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-comment"># temporary solution for relative imports in case pyod is not installed</span><br><span class="hljs-comment"># if pyod is installed, no need to use the following line</span><br>sys.path.append(<br>    os.path.abspath(os.path.join(os.path.dirname(<span class="hljs-string">&quot;__file__&quot;</span>), <span class="hljs-string">&#x27;..&#x27;</span>)))<br><br><span class="hljs-keyword">from</span> pyod.models.cblof <span class="hljs-keyword">import</span> CBLOF<br><span class="hljs-keyword">from</span> pyod.utils.data <span class="hljs-keyword">import</span> generate_data<br><span class="hljs-keyword">from</span> pyod.utils.data <span class="hljs-keyword">import</span> evaluate_print<br><span class="hljs-keyword">from</span> pyod.utils.example <span class="hljs-keyword">import</span> visualize<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    contamination = <span class="hljs-number">0.1</span>  <span class="hljs-comment"># percentage of outliers</span><br>    n_train = <span class="hljs-number">200</span>  <span class="hljs-comment"># number of training points</span><br>    n_test = <span class="hljs-number">100</span>  <span class="hljs-comment"># number of testing points</span><br><br>    <span class="hljs-comment"># Generate sample data</span><br>    X_train, X_test, y_train, y_test = \<br>        generate_data(n_train=n_train,<br>                      n_test=n_test,<br>                      n_features=<span class="hljs-number">2</span>,<br>                      contamination=contamination,<br>                      random_state=<span class="hljs-number">42</span>)<br><br>    <span class="hljs-comment"># train CBLOF detector</span><br>    clf_name = <span class="hljs-string">&#x27;CBLOF&#x27;</span><br>    clf = CBLOF(random_state=<span class="hljs-number">42</span>)<br>    clf.fit(X_train)<br><br>    <span class="hljs-comment"># get the prediction labels and outlier scores of the training data</span><br>    y_train_pred = clf.labels_  <span class="hljs-comment"># binary labels (0: inliers, 1: outliers)</span><br>    y_train_scores = clf.decision_scores_  <span class="hljs-comment"># raw outlier scores</span><br><br>    <span class="hljs-comment"># get the prediction on the test data</span><br>    y_test_pred = clf.predict(X_test)  <span class="hljs-comment"># outlier labels (0 or 1)</span><br>    y_test_scores = clf.decision_function(X_test)  <span class="hljs-comment"># outlier scores</span><br><br>    <span class="hljs-comment"># evaluate and print the results</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\nOn Training Data:&quot;</span>)<br>    evaluate_print(clf_name, y_train, y_train_scores)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\nOn Test Data:&quot;</span>)<br>    evaluate_print(clf_name, y_test, y_test_scores)<br><br>    <span class="hljs-comment"># visualize the results</span><br>    visualize(clf_name, X_train, y_train, X_test, y_test, y_train_pred,<br>              y_test_pred, show_figure=<span class="hljs-literal">True</span>, save_figure=<span class="hljs-literal">False</span>)<br><br></code></pre></td></tr></table></figure><p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/image-20220905153107527.png" alt="image-20220905153107527"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>FRAUDAR算法</title>
+    <link href="/2022/08/25/fraudar/"/>
+    <url>/2022/08/25/fraudar/</url>
+    
+    <content type="html"><![CDATA[<h2 id="FRAUDAR算法（图模型）"><a href="#FRAUDAR算法（图模型）" class="headerlink" title="FRAUDAR算法（图模型）"></a>FRAUDAR算法（图模型）</h2><ul><li><p><strong>基于二部图表示</strong></p><ul><li>二部图：网络中存在两种类型的节点Users和Objects，文中假设可能存在一个或多个Users收到相关某个实体的控制，进而与Objects的某个子集交互而产生连边。找到一个S，使得S构成子图的嫌疑指标g(S)最大</li><li>两类结点组成的欺诈场景还可以举出很多例子，如电商场景下用户对商户的薅羊毛、刷好评，如社交场景下水军账号的虚假关注、转发，又如消金场景下用户与商户勾结对平台的消费贷套现欺诈。这些行为都会使两类结点之间出现异常的连接分布，从整体网络看来其呈现出了一张致密的双边连接子图，且该子图内的结点与图外结点联系相对较少，把这种大量的、同步的非正常关联行为模式称之为Lockstep，即在本不应出现聚集行为的二部图自然关系网络中，出现了双边聚集性行为。</li></ul></li><li><p><strong>表现</strong>：该论文主要针对社交虚假粉丝，虚假关注， 虚假评价和等场景， 同时针对伪装进行良好的算法设计，在Twitter公开数据集上能够挖掘出存在购买虚假粉丝账号的博主，该博主账号7年未被Twitter检测到。</p></li><li><p><strong>步骤</strong></p><ol><li>将优先级最高的节点移出二部图  </li><li>更新与移出节点相关的节点可疑度 </li><li>反复执行步骤1和步骤2，直至所有节点都被移出 </li><li>最后比较各轮迭代中节点的可疑度数，找到最大可疑度对应的子图</li></ol></li><li><p><strong>特点</strong></p><ul><li>识别伪装</li><li>理论保证</li><li>发现密集块</li><li>实际数据表现好</li><li>可扩展性，接近线性的时间复杂度</li><li>提出了一系列新颖的指标用于度量可疑程度</li></ul></li><li><p><strong>背景</strong></p><ul><li>global method：这类方法偏矩阵分解的方式，可以获得稠密的sub 矩阵块， 像Holoscope 也是用这种方式来做加速和初始化。</li><li>本地聚类方法：就是local search 的方式，就是在定义一个obj之后通过search的方式在整体的图中，组合的search找到一个局部最优解。</li><li>Dense Subgraph mining： 这种社区划分类似的方法，或者图切割的方式可以找到子图，但是对于欺诈的场景下，还是类似于Local Clustering Methods</li></ul></li></ul><p>​<em><strong>注：spectral algorithms可以指代使用了SVD特征值分解的算法</strong></em></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Diary</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>风险控制</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>date类型</title>
     <link href="/2022/08/18/Mybatis%E7%9B%B8%E5%85%B3/"/>
     <url>/2022/08/18/Mybatis%E7%9B%B8%E5%85%B3/</url>
@@ -58,7 +158,7 @@
     <link href="/2022/08/01/https/"/>
     <url>/2022/08/01/https/</url>
     
-    <content type="html"><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/05234233-eed6ddcba93c42be8847e98d6da62802.jpg" alt="三次握手"></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/05234233-eed6ddcba93c42be8847e98d6da62802.jpg" alt="三次握手"></p><ul><li>SYN: Synchronized Sequence Number</li><li>ACK:  Acknowledge character</li></ul>]]></content>
     
     
     <categories>
@@ -167,31 +267,6 @@
       <tag>rpc</tag>
       
       <tag>dubbo</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>FRAUDAR算法</title>
-    <link href="/2022/07/28/fraudar/"/>
-    <url>/2022/07/28/fraudar/</url>
-    
-    <content type="html"><![CDATA[<h2 id="FRAUDAR算法"><a href="#FRAUDAR算法" class="headerlink" title="FRAUDAR算法"></a>FRAUDAR算法</h2><ul><li><p><strong>基于二部图表示</strong></p><ul><li>二部图：网络中存在两种类型的节点Users和Objects，文中假设可能存在一个或多个Users收到相关某个实体的控制，进而与Objects的某个子集交互而产生连边。找到一个S，使得S构成子图的嫌疑指标g(S)最大</li><li>两类结点组成的欺诈场景还可以举出很多例子，如电商场景下用户对商户的薅羊毛、刷好评，如社交场景下水军账号的虚假关注、转发，又如消金场景下用户与商户勾结对平台的消费贷套现欺诈。这些行为都会使两类结点之间出现异常的连接分布，从整体网络看来其呈现出了一张致密的双边连接子图，且该子图内的结点与图外结点联系相对较少，把这种大量的、同步的非正常关联行为模式称之为Lockstep，即在本不应出现聚集行为的二部图自然关系网络中，出现了双边聚集性行为。</li></ul></li><li><p><strong>表现</strong>：该论文主要针对社交虚假粉丝，虚假关注， 虚假评价和等场景， 同时针对伪装进行良好的算法设计，在Twitter公开数据集上能够挖掘出存在购买虚假粉丝账号的博主，该博主账号7年未被Twitter检测到。</p></li><li><p><strong>步骤</strong></p><ol><li>将优先级最高的节点移出二部图  </li><li>更新与移出节点相关的节点可疑度 </li><li>反复执行步骤1和步骤2，直至所有节点都被移出 </li><li>最后比较各轮迭代中节点的可疑度数，找到最大可疑度对应的子图</li></ol></li><li><p><strong>特点</strong></p><ul><li>识别伪装</li><li>理论保证</li><li>发现密集块</li><li>实际数据表现好</li><li>可扩展性，接近线性的时间复杂度</li><li>提出了一系列新颖的指标用于度量可疑程度</li></ul></li><li><p><strong>背景</strong></p><ul><li>global method：这类方法偏矩阵分解的方式，可以获得稠密的sub 矩阵块， 像Holoscope 也是用这种方式来做加速和初始化。</li><li>本地聚类方法：就是local search 的方式，就是在定义一个obj之后通过search的方式在整体的图中，组合的search找到一个局部最优解。</li><li>Dense Subgraph mining： 这种社区划分类似的方法，或者图切割的方式可以找到子图，但是对于欺诈的场景下，还是类似于Local Clustering Methods</li></ul></li></ul><p>​<em><strong>注：spectral algorithms可以指代使用了SVD特征值分解的算法</strong></em></p>]]></content>
-    
-    
-    <categories>
-      
-      <category>Diary</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>风险控制</tag>
       
     </tags>
     

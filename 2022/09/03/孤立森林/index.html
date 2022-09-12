@@ -16,24 +16,22 @@
   <meta name="author" content="uiopmn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="SYN: Synchronized Sequence Number ACK:  Acknowledge character">
+    <meta name="description" content="孤立森林（Isolation-Forest）（集成学习模型） 理论基础:   异常数据占总样本量的比例很少 异常点的特征值与正常点的差异很大 异常样本相较普通样本可以通过较少次数的随机特征分割被孤立出来   步骤:  从训练数据中随机选择 Ψ 个点作为子样本，放入一棵孤立树的根节点；  随机指定一个维度，在当前节点数据范围内，随机产生一个切割点 p —— 切割点产生于当前节点数据中指定维度的最大值">
 <meta property="og:type" content="article">
-<meta property="og:title" content="https">
-<meta property="og:url" content="http://uiopm.github.io/2022/08/01/https/index.html">
+<meta property="og:title" content="孤立森林">
+<meta property="og:url" content="http://uiopm.github.io/2022/09/03/%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97/index.html">
 <meta property="og:site_name" content="笔记">
-<meta property="og:description" content="SYN: Synchronized Sequence Number ACK:  Acknowledge character">
+<meta property="og:description" content="孤立森林（Isolation-Forest）（集成学习模型） 理论基础:   异常数据占总样本量的比例很少 异常点的特征值与正常点的差异很大 异常样本相较普通样本可以通过较少次数的随机特征分割被孤立出来   步骤:  从训练数据中随机选择 Ψ 个点作为子样本，放入一棵孤立树的根节点；  随机指定一个维度，在当前节点数据范围内，随机产生一个切割点 p —— 切割点产生于当前节点数据中指定维度的最大值">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/uiopm/img@main/05234233-eed6ddcba93c42be8847e98d6da62802.jpg">
-<meta property="article:published_time" content="2022-08-01T07:20:00.000Z">
-<meta property="article:modified_time" content="2022-08-29T09:08:00.322Z">
+<meta property="article:published_time" content="2022-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-07T09:46:37.622Z">
 <meta property="article:author" content="uiopmn">
-<meta property="article:tag" content="网络">
+<meta property="article:tag" content="风险控制">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/uiopm/img@main/05234233-eed6ddcba93c42be8847e98d6da62802.jpg">
   
   
   
-  <title>https - 笔记</title>
+  <title>孤立森林 - 笔记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="https"></span>
+            <span id="subtitle" data-typed-text="孤立森林"></span>
           
         </div>
 
@@ -209,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-01 15:20" pubdate>
-          2022年8月1日 下午
+        <time datetime="2022-09-03 00:00" pubdate>
+          2022年9月3日 凌晨
         </time>
       </span>
     
@@ -221,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          54 字
+          954 字
         
       </span>
     
@@ -232,7 +230,7 @@
         
         
         
-          1 分钟
+          8 分钟
         
       </span>
     
@@ -270,15 +268,52 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">https</h1>
+            <h1 style="display: none">孤立森林</h1>
             
             
               <div class="markdown-body">
                 
-                <p><img src="https://cdn.jsdelivr.net/gh/uiopm/img@main/05234233-eed6ddcba93c42be8847e98d6da62802.jpg" srcset="/img/loading.gif" lazyload alt="三次握手"></p>
-<ul>
-<li>SYN: Synchronized Sequence Number</li>
-<li>ACK:  Acknowledge character</li>
+                <h2 id="孤立森林（Isolation-Forest）（集成学习模型）"><a href="#孤立森林（Isolation-Forest）（集成学习模型）" class="headerlink" title="孤立森林（Isolation-Forest）（集成学习模型）"></a>孤立森林（Isolation-Forest）（集成学习模型）</h2><ul>
+<li><p><strong>理论基础</strong>: </p>
+<ol>
+<li>异常数据占总样本量的比例很少</li>
+<li>异常点的特征值与正常点的差异很大</li>
+<li><strong>异常样本相较普通样本可以通过较少次数的随机特征分割被孤立出来</strong></li>
+</ol>
+</li>
+<li><p><strong>步骤</strong>:</p>
+<ol>
+<li><p>从训练数据中随机选择 Ψ 个点作为子样本，放入一棵孤立树的根节点；</p>
+</li>
+<li><p>随机指定一个维度，在当前节点数据范围内，随机产生一个切割点 p —— 切割点产生于当前节点数据中指定维度的最大值与最小值之间；</p>
+</li>
+<li><p>此切割点的选取生成了一个超平面，将当前节点数据空间切分为2个子空间：把当前所选维度下小于 p 的点放在当前节点的左分支，把大于等于 p 的点放在当前节点的右分支；</p>
+</li>
+<li><p>在节点的左分支和右分支节点递归步骤 2、3，不断构造新的叶子节点，直到叶子节点上只有一个数据（无法再继续切割） 或树已经生长到了所设定的高度 。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ol>
+<li><p>iForest具有<strong>线性时间复杂度</strong>。因为是ensemble的方法，所以可以用在含有海量数据的数据集上面。通常<strong>树的数量越多，算法越稳定</strong>。由于每棵树都是互相独立生成的，因此可以部署在<strong>大规模分布式系统上来加速运算</strong>。</p>
+</li>
+<li><p>iForest推动了重心估计（Mass Estimation）理论发展，目前在分类聚类和异常检测中都取得显著效果，发表于各大顶级数据挖掘会议和期刊（如SIGKDD，ICDM，ECML）。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ol>
+<li><strong>iForest不适用于特别高维的数据</strong>。由于每次切数据空间都是随机选取一个维度，建完树后仍然有大量的维度信息没有被使用，导致算法可靠性降低。<strong>高维空间还可能存在大量噪音维度或无关维度（irrelevant attributes），影响树的构建。</strong>对这类数据，建议使用子空间异常检测</li>
+<li>iForest仅对全局稀疏点敏感，不擅长处理局部的相对稀疏点 （Local Anomaly）。</li>
+</ol>
+</li>
+<li><p><strong>适用场景</strong>：</p>
+<ol>
+<li>孤立森林的特点是计算量小、天生可以分布式训练和计算，非常适合海量数据的场景（如果数据的维度特别高，孤立森林的规模会过于庞大，就没有了计算开销较小的优势）。</li>
+<li>如果训练样本中<strong>异常样本的比例比较高</strong>，违背了先前提到的异常检测的基本假设，可能最终的效果会受影响；</li>
+<li>异常检测跟具体的应用场景紧密相关，算法检测出的“异常”不一定是我们实际想要的。比如，在识别虚假交易时，异常的交易未必就是虚假的交易。所以，在特征选择时，可能需要<strong>过滤不太相关的特征</strong>，以免识别出一些不太相关的“异常”。</li>
+</ol>
+</li>
 </ul>
 
                 
@@ -313,7 +348,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%BD%91%E7%BB%9C/">#网络</a>
+        <a href="/tags/%E9%A3%8E%E9%99%A9%E6%8E%A7%E5%88%B6/">#风险控制</a>
       
     </div>
   
@@ -325,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>https</div>
-      <div>http://uiopm.github.io/2022/08/01/https/</div>
+      <div>孤立森林</div>
+      <div>http://uiopm.github.io/2022/09/03/孤立森林/</div>
     </div>
     <div class="license-meta">
       
@@ -338,7 +373,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月1日</div>
+          <div>2022年9月3日</div>
         </div>
       
       
@@ -368,18 +403,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/03/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="消息队列">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">消息队列</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/29/%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95/" title="众数问题">
-                        <span class="hidden-mobile">众数问题</span>
+                      <a href="/2022/09/02/pyod/" title="pyod">
+                        <span class="hidden-mobile">pyod</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
